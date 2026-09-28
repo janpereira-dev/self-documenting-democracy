@@ -1,4 +1,4 @@
-name: Validate HELLDOCS
+name: Validate Self-Documenting Democracy
 on:
   push:
   pull_request:
@@ -29,10 +29,27 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
           export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\r\n')"
-          mkdir -p "$RUNNER_TEMP/helldocs-install-smoke"
-          cd "$RUNNER_TEMP/helldocs-install-smoke"
-          npx --yes skills@1.7.0 add "$GITHUB_REPOSITORY" --agent codex claude-code --yes
-          test -f .agents/skills/helldocs/SKILL.md
-          test -f .claude/skills/helldocs/SKILL.md
-          cmp .agents/skills/helldocs/SKILL.md "$GITHUB_WORKSPACE/skills/helldocs/SKILL.md"
-          cmp .claude/skills/helldocs/SKILL.md "$GITHUB_WORKSPACE/skills/helldocs/SKILL.md"
+          source="$GITHUB_WORKSPACE"
+          if [ "$GITHUB_EVENT_NAME" = push ] && [ "$GITHUB_REF" = refs/heads/main ]; then
+            source="$GITHUB_REPOSITORY"
+          fi
+          for selection in en es both; do
+            mkdir -p "$RUNNER_TEMP/democracy-smoke-$selection"
+            cd "$RUNNER_TEMP/democracy-smoke-$selection"
+            editions=(en es)
+            if [ "$selection" != both ]; then editions=("$selection"); fi
+            skills=()
+            for edition in "${editions[@]}"; do
+              skills+=("self-documenting-democracy-$edition")
+            done
+            npx --yes skills@1.7.0 add "$source" --skill "${skills[@]}" --agent codex claude-code --yes
+            for skill in "${skills[@]}"; do
+              diff -r ".agents/skills/$skill" "$GITHUB_WORKSPACE/skills/$skill"
+              diff -r ".claude/skills/$skill" "$GITHUB_WORKSPACE/skills/$skill"
+            done
+            if [ "$selection" = en ]; then
+              test ! -e .agents/skills/self-documenting-democracy-es
+            elif [ "$selection" = es ]; then
+              test ! -e .agents/skills/self-documenting-democracy-en
+            fi
+          done

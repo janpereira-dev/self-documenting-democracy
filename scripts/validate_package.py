@@ -10,19 +10,28 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def validate():
-    agent = tomllib.loads((ROOT / 'adapters/codex/helldocs_archivist.toml').read_text(encoding='utf-8'))
-    assert agent['name'] == 'helldocs_archivist'
+    agent = tomllib.loads((ROOT / 'adapters/codex/democracy_archivist.toml').read_text(encoding='utf-8'))
+    assert agent['name'] == 'democracy_archivist'
     assert agent['sandbox_mode'] == 'read-only'
     assert agent['description'] and agent['developer_instructions']
-    claude = (ROOT / 'adapters/claude/helldocs-archivist.md').read_text(encoding='utf-8')
+    claude = (ROOT / 'adapters/claude/democracy-archivist.md').read_text(encoding='utf-8')
     frontmatter = claude.split('---', 2)[1]
-    assert 'name: helldocs-archivist' in frontmatter
+    assert 'name: democracy-archivist' in frontmatter
     assert 'tools: Read, Grep, Glob' in frontmatter
     assert 'model: inherit' in frontmatter
-    assert '  - helldocs' in frontmatter
-    skill = (ROOT / 'skills/helldocs/SKILL.md').read_text(encoding='utf-8')
-    assert 'name: helldocs\n' in skill
-    assert 'description:' in skill.split('---', 2)[1]
+    assert 'skills:' not in frontmatter, 'Do not preload both editions'
+    names = {f'self-documenting-democracy-{locale}' for locale in ('en', 'es')}
+    assert {p.name for p in (ROOT / 'skills').iterdir() if p.is_dir()} == names
+    for name in names:
+        folder = ROOT / 'skills' / name
+        skill = (folder / 'SKILL.md').read_text(encoding='utf-8')
+        assert f'name: {name}\n' in skill
+        assert 'description:' in skill.split('---', 2)[1]
+        metadata = (folder / 'agents/openai.yaml').read_text(encoding='utf-8')
+        assert f'${name}' in metadata
+        locale = name.rsplit('-', 1)[1]
+        assert f'docs/super-earth/{locale}/' in skill
+        assert f'docs/super-earth/{locale}/' in (folder / 'references/documentation-contract.md').read_text(encoding='utf-8')
     checked = 0
     for path in ROOT.rglob('*'):
         if '.git' in path.parts or not path.is_file():
@@ -40,8 +49,11 @@ def validate():
             target = (path.parent / link.split('#')[0]).resolve()
             assert target.is_relative_to(ROOT), f'Link escapes package: {path}: {link}'
             assert target.exists(), f'Broken link: {path}: {link}'
+            if path.is_relative_to(ROOT / 'skills'):
+                bundle = ROOT / 'skills' / path.relative_to(ROOT / 'skills').parts[0]
+                assert target.is_relative_to(bundle), f'Skill is not self-contained: {path}: {link}'
             checked += 1
-    for name in ['helldocs-recruitment.png', 'high-command.png']:
+    for name in ['democracy-recruitment.png', 'democracy-high-command.png']:
         data = (ROOT / 'assets/propaganda' / name).read_bytes()
         assert data[:8] == b'\x89PNG\r\n\x1a\n'
         width, height = struct.unpack('>II', data[16:24])

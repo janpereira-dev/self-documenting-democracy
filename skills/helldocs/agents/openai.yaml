@@ -1,6 +1,0 @@
-interface:
-  display_name: "HELLDOCS — Managed Documentation"
-  short_description: "Documentación técnica con democracia gestionada"
-  icon_large: "./assets/command.svg"
-  brand_color: "#F5D547"
-  default_prompt: "Usa $helldocs para documentar este proyecto como una campaña de Supertierra, sin modificar su código y con evidencia verificable."

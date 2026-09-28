@@ -2,7 +2,7 @@
 
 ## Salida por defecto
 
-Dentro de `docs/super-earth/`:
+Dentro de `docs/super-earth/es/`:
 
 - `README.md`: apertura del Portavoz, propósito real, alcance, snapshot e índice.
 - `architecture.md`: mapa del superdestructor, componentes, límites, decisiones

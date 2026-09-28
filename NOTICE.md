@@ -1,6 +1,6 @@
 # Fan project notice
 
-HELLDOCS is an unofficial fan project inspired by Helldivers 2. It is not affiliated
+Self-Documenting Democracy is an unofficial fan project inspired by Helldivers 2. It is not affiliated
 with, endorsed by, or an official product of Arrowhead Game Studios, Sony Interactive
 Entertainment, PlayStation, OpenAI, or Anthropic.
 

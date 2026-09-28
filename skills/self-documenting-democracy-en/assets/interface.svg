@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="144" viewBox="0 0 256 288" role="img" aria-labelledby="title desc">
+<title id="title">Pixel Sentinels</title><desc id="desc">Original fan-made documentation division insignia. Unofficial.</desc>
+<path d="M20 20H236V196L128 270L20 196Z" fill="#111820" stroke="#b7d56b" stroke-width="6"/>
+<path d="M35 36H221V188L128 252L35 188Z" fill="none" stroke="#b7d56b" stroke-opacity=".4" stroke-width="2"/>
+<path d="M95 44H161M109 53H147M76 213L128 243L180 213" fill="none" stroke="#b7d56b" stroke-width="5"/>
+<g fill="#b7d56b" color="#b7d56b"><rect x="73" y="76" width="110" height="85" rx="5" fill="none" stroke="currentColor" stroke-width="9"/><path d="M93 103H118V128H93ZM133 103H161V112H133ZM133 119H151V128H133ZM114 162H142V174H114Z"/></g>
+<path d="M51 191H205" stroke="#b7d56b" stroke-width="3"/>
+</svg>

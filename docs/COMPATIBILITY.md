@@ -1,67 +1,51 @@
-# Instalación estándar: Skills CLI
+# Compatibility
 
-Desde el proyecto de destino:
-
-```sh
-npx skills add janpereira-dev/helldocs
-```
-
-Seleccione el entorno en el asistente. Para Claude Code y Codex sin preguntas:
+Install with the existing [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```sh
-npx --yes skills add janpereira-dev/helldocs --agent codex claude-code --yes
+npx skills add janpereira-dev/self-documenting-democracy
 ```
 
-Usamos la herramienta existente [vercel-labs/skills](https://github.com/vercel-labs/skills),
-no un paquete npm propio ni un wrapper. Requiere Node.js/npm y Git, no Python.
-La instalación predeterminada es por proyecto. `--yes` omite confirmaciones y puede
-reemplazar skills existentes del mismo nombre: revise el destino previamente.
-Si necesita copias en lugar de enlaces, Skills CLI admite `--copy`.
+Select `self-documenting-democracy-en`, `self-documenting-democracy-es`, or both.
+Requires Node.js/npm and Git, not Python. Private repositories require authorized
+GitHub access. Default scope is the current project. `--yes` skips overwrite prompts;
+`--copy` uses copies instead of links. No custom installer or global configuration.
 
-Mientras GitHub sea privado, se necesita autenticación y acceso al repositorio.
-No se cambia su visibilidad como efecto secundario de simplificar la instalación.
+Codex uses `$<skill-name>`; Claude Code uses `/<skill-name>`. Skill-specific output
+language is explicit, and default output directories are `docs/super-earth/en/`
+and `docs/super-earth/es/`. Each installed folder includes every required reference.
+Python helpers are optional, never an installation prerequisite.
 
-## Uso inmediato
+## Optional native agents — not installed by Skills CLI
 
-Codex: `Usa $helldocs para documentar este proyecto.`
-
-Claude Code: `/helldocs Documenta este proyecto.`
-
-El agente actual aplica la skill, narra y guarda documentación. No necesita Python,
-subagentes personalizados, MCP ni API keys adicionales. El helper Python es opcional;
-el inventario se puede elaborar con las herramientas de lectura del host.
-
-## Adaptadores opcionales: no incluidos en la instalación estándar
-
-`npx skills add` instala skills; no registra nuestras definiciones de subagente.
-Conservamos los adaptadores para usuarios que ya gestionan agentes nativos:
-
-| Adaptador del repositorio | Destino manual opcional | Restricción |
+| Source | Optional manual destination | Restriction |
 |---|---|---|
-| `adapters/codex/helldocs_archivist.toml` | `.codex/agents/helldocs_archivist.toml` | Sandbox `read-only` |
-| `adapters/claude/helldocs-archivist.md` | `.claude/agents/helldocs-archivist.md` | `Read, Grep, Glob` |
+| `adapters/codex/democracy_archivist.toml` | `.codex/agents/democracy_archivist.toml` | `read-only` sandbox |
+| `adapters/claude/democracy-archivist.md` | `.claude/agents/democracy-archivist.md` | `Read, Grep, Glob` only |
 
-Solo configure estos agentes si desea delegación separada; no son necesarios para
-usar HELLDOCS. No sobrescriba definiciones existentes. La carga real depende del host.
+The parent selects ONE edition and passes its absolute SKILL.md path. These agents
+return drafts, evidence and a resume point; the parent writes documentation.
+They do not preload both languages or require the other edition. Native-agent
+registration is optional and must be checked in the actual client after setup.
+Preserve existing agent definitions; no automatic configuration migration is attempted.
 
-## Límites de seguridad
+## Safety boundary
 
-La skill impone instrucciones de documentación, no una sandbox que limite escrituras
-por directorio. Los adaptadores opcionales tienen restricciones distintas y retornan
-borradores. El sandbox de archivos tampoco convierte conectores MCP en solo lectura.
-No se deben abrir secretos ni ejecutar herramientas mutantes para el reconocimiento.
+The ordinary skill does not establish a filesystem sandbox. Native restrictions
+are separate. Read permissions remain host-controlled; a filesystem sandbox does
+not turn remote connectors into read-only tools. Never use mutating connectors,
+access secrets or send private code out during reconnaissance.
 
-Skills CLI puede usar enlaces simbólicos entre directorios de skills; esos enlaces
-instalados y autorizados son distintos de enlaces encontrados en el código analizado.
-La skill sigue sin permitir explorar enlaces del proyecto fuera del alcance autorizado.
+Skills CLI's authorized installation links are not the same as project links
+encountered during analysis; do not traverse the latter out of authorized scope.
 
-## Fuentes verificadas el 2026-09-28
+## Official references
 
-- [Skills CLI: instalación, agentes y repositorios privados](https://github.com/vercel-labs/skills)
-- [Skills CLI: documentación](https://skills.sh/docs/cli)
-- [Codex: agentes](https://learn.chatgpt.com/docs/agent-configuration/subagents)
-- [Claude Code: subagentes](https://code.claude.com/docs/en/sub-agents)
+Verified during this project's setup on 2026-09-28:
 
-Publicación en catálogos y validación de comportamiento en clientes son etapas
-separadas de la instalación de archivos. No se promete compatibilidad con Cowork
-ni con todos los agentes alojados.
+- [Skills CLI](https://github.com/vercel-labs/skills)
+- [Codex agents](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+- [Claude Code agents](https://code.claude.com/docs/en/sub-agents)
+
+File installation is not marketplace publication, client execution or universal
+compatibility with hosted agents and Cowork.

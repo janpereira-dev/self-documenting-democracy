@@ -5,7 +5,7 @@ import uuid
 import unittest
 from unittest.mock import patch
 
-SCRIPT = Path(__file__).parents[1] / 'skills/helldocs/scripts/inventory.py'
+SCRIPT = Path(__file__).parents[1] / 'skills/self-documenting-democracy-en/scripts/inventory.py'
 SPEC = importlib.util.spec_from_file_location('inventory', SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)

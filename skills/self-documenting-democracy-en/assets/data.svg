@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="144" viewBox="0 0 256 288" role="img" aria-labelledby="title desc">
+<title id="title">Steel Notaries</title><desc id="desc">Original fan-made documentation division insignia. Unofficial.</desc>
+<path d="M20 20H236V196L128 270L20 196Z" fill="#111820" stroke="#ed9472" stroke-width="6"/>
+<path d="M35 36H221V188L128 252L35 188Z" fill="none" stroke="#ed9472" stroke-opacity=".4" stroke-width="2"/>
+<path d="M95 44H161M109 53H147M76 213L128 243L180 213" fill="none" stroke="#ed9472" stroke-width="5"/>
+<g fill="#ed9472" color="#ed9472"><path d="M81 98V155C81 178 175 178 175 155V98" fill="none" stroke="currentColor" stroke-width="8"/><ellipse cx="128" cy="96" rx="47" ry="17" fill="none" stroke="currentColor" stroke-width="8"/><path d="M81 124C81 147 175 147 175 124" fill="none" stroke="currentColor" stroke-width="8"/></g>
+<path d="M51 191H205" stroke="#ed9472" stroke-width="3"/>
+</svg>

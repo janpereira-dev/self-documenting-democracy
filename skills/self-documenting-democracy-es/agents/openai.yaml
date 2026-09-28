@@ -1,0 +1,6 @@
+interface:
+  display_name: "Democracia Autodocumentada — Español"
+  short_description: "Documentación de Supertierra en español"
+  icon_large: "./assets/command.svg"
+  brand_color: "#F5D547"
+  default_prompt: "Usa $self-documenting-democracy-es para documentar este proyecto en español con evidencia y narrativa de Supertierra."
