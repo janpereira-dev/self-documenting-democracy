@@ -1,4 +1,4 @@
-# Validation record — 2026-09-28
+# Validation record â€” 2026-09-28
 
 ## Current simplified package
 
@@ -11,6 +11,12 @@
 - CI runs these repository checks on Windows and Linux with read-only repository
   permissions and no persisted checkout credentials. It no longer executes npm
   or passes a GitHub token to a package installer.
+
+## Real-client test attempt
+
+See [the 2026-09-28 test report](docs/E2E-2026-09-28.md): four fresh GitHub
+installation scenarios passed on Windows, but real-client documentation generation
+was blocked by Codex read policy and Claude API retries. It is not an E2E pass.
 
 ## Historical installation evidence
 
