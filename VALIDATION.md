@@ -16,6 +16,10 @@
 
 Las rutas de caché npm y temporales de la prueba se ubicaron en el workspace por
 restricciones de permisos del host. No se cambió configuración global.
+La prueba local usando la URL GitHub se bloqueó con `spawn EPERM` al intentar
+clonar desde Skills CLI; no se cuenta como una instalación remota satisfactoria.
+El workflow incluye una prueba de instalación desde GitHub para verificar ese
+camino en runners aislados; consultar su resultado remoto, no inferirlo del YAML.
 
 ## No verificado
 

@@ -17,3 +17,22 @@ jobs:
           python-version: '3.12'
       - run: python -B -m unittest discover -s tests -v
       - run: python -B scripts/validate_package.py
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Install from GitHub using the standard Skills CLI
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DISABLE_TELEMETRY: '1'
+        run: |
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\r\n')"
+          mkdir -p "$RUNNER_TEMP/helldocs-install-smoke"
+          cd "$RUNNER_TEMP/helldocs-install-smoke"
+          npx --yes skills@1.7.0 add "$GITHUB_REPOSITORY" --agent codex claude-code --yes
+          test -f .agents/skills/helldocs/SKILL.md
+          test -f .claude/skills/helldocs/SKILL.md
+          cmp .agents/skills/helldocs/SKILL.md "$GITHUB_WORKSPACE/skills/helldocs/SKILL.md"
+          cmp .claude/skills/helldocs/SKILL.md "$GITHUB_WORKSPACE/skills/helldocs/SKILL.md"
