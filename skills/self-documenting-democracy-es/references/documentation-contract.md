@@ -46,8 +46,9 @@ snapshot: no equivale a verificación de producción.
 
 ## Cobertura honesta
 
-El helper entrega `entries` con `path`, `kind`, `status`, `reason` y metadatos.
-Conserva su inventario y añade `read_ranges`, `evidence_ids`, `document`, `documented`.
+Construye `entries` con `path`, `kind`, `status`, `reason`, `read_ranges`,
+`evidence_ids`, `document` y `documented` usando herramientas de lectura.
+Usa rutas relativas y omite nombres o valores sensibles del expediente.
 Estados de archivo: `pending`, `read`, `partial`, `excluded`, `blocked`.
 Las carpetas podadas constan como UNA entrada de directorio: no cuentan como archivos
 leídos ni se conoce la cantidad de archivos interiores. No las elimines del informe.

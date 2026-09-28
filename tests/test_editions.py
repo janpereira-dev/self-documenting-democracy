@@ -14,9 +14,15 @@ class EditionTests(unittest.TestCase):
                     if p.is_file() and '__pycache__' not in p.parts}
         self.assertEqual(resources(EN), resources(ES))
 
-    def test_optional_inventory_helpers_are_identical(self):
-        self.assertEqual((EN / 'scripts/inventory.py').read_bytes(),
-                         (ES / 'scripts/inventory.py').read_bytes())
+    def test_installed_bundles_are_passive(self):
+        allowed = {'.md', '.yaml', '.svg'}
+        for folder in (EN, ES):
+            for path in folder.rglob('*'):
+                self.assertFalse(path.is_symlink(), str(path))
+                if path.is_file():
+                    self.assertIn(path.suffix, allowed, str(path))
+            self.assertFalse((folder / 'scripts').exists() and
+                             any((folder / 'scripts').iterdir()))
 
     def test_sources_remain_equivalent(self):
         def links(folder):

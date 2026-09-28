@@ -1,38 +1,28 @@
 # Validation record — 2026-09-28
 
-## Scope
+## Current simplified package
 
-Two independently installable editions: English and Spanish. Checks distinguish
-bundle structure, file installation and actual model behavior.
+- 8/8 local tests pass: five bilingual bundle checks and three security regression
+  checks (including six active/external SVG payloads rejected).
+- Package validator checks local links, adapter contracts, independently contained
+  editions, a static SVG allowlist and two PNG headers.
+- Both Skill Creator structural validators pass.
+- Installed bundles contain no executable helpers. Python is contributor-only.
+- CI runs these repository checks on Windows and Linux with read-only repository
+  permissions and no persisted checkout credentials. It no longer executes npm
+  or passes a GitHub token to a package installer.
 
-## Local results
+## Historical installation evidence
 
-14/14 unit tests passed (9 inventory + 5 bilingual packaging). Both Skill Creator
-structural validations passed. Package validation checked 33 local links, native
-adapter invariants and two PNG headers.
-
-## Automated checks
-
-- Inventory helper regression tests, including sensitive filenames, pruning,
-  metadata-only operation, large files, access errors and Unicode paths.
-- Bilingual package tests: matching resource sets, byte-identical optional helpers,
-  equivalent machine-readable states, source URL parity and separate output paths.
-- Package validator: native adapter invariants, both skill identities, local links,
-  no cross-bundle runtime dependencies, SVG parsing and PNG headers.
-- Skill Creator structural validator is run separately for each edition.
-- CI on Linux and Windows installs EN alone, ES alone and both using Skills CLI
-  1.7.0, then checks the installed content. Check the actual workflow result;
-  this file alone does not establish a successful remote run.
+Before the simplification, commit `980fd2f` passed installation of EN alone, ES
+alone and both for Claude Code and Codex with Skills CLI 1.7.0 on Windows and Linux:
+[run 36387327674](https://github.com/janpereira-dev/self-documenting-democracy/actions/runs/36387327674).
+That result is historical, not a fresh installation test of every later commit.
 
 ## Limits
 
-These checks do not prove narrative quality, semantic translation equivalence,
-real-client discovery, model adherence, or a complete security boundary. The manual
-language/safety scenarios in [maintenance](docs/MAINTENANCE.md) still require
-real-client behavioral evaluation. No marketplace approval is claimed.
-
-The earlier single-skill installation was verified on Linux and Windows. The new
-bilingual distribution must pass its own pipeline; do not transfer that claim.
-
-Python is used for contributor tests and an optional metadata helper only. Users
-install with the existing Skills CLI and do not need Python.
+Structural checks are not proof of model adherence, narrative quality, semantic
+translation equivalence, runtime client discovery or absence of vulnerabilities.
+Real-client acceptance scenarios remain in [maintenance](docs/MAINTENANCE.md).
+See [security review](SECURITY.md) for scope, removed risk and residual trust boundaries.
+No marketplace approval or complete security guarantee is claimed.

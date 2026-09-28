@@ -14,7 +14,7 @@ GitHub access. Default scope is the current project. `--yes` skips overwrite pro
 Codex uses `$<skill-name>`; Claude Code uses `/<skill-name>`. Skill-specific output
 language is explicit, and default output directories are `docs/super-earth/en/`
 and `docs/super-earth/es/`. Each installed folder includes every required reference.
-Python helpers are optional, never an installation prerequisite.
+Installed bundles contain no Python helpers or other executable scripts.
 
 ## Optional native agents — not installed by Skills CLI
 

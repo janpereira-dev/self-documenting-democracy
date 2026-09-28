@@ -15,7 +15,7 @@ service or custom installation system is required.
 
 1. Apply shared behavioral changes to both SKILL.md files and both relevant references.
 2. Keep filenames and machine-readable contracts aligned; translate prose and alt text.
-3. Both optional inventory helpers must remain byte-identical. Update both and tests.
+3. Keep installed bundles passive: Markdown, YAML metadata and static SVG only.
 4. Every skill must work when installed alone: never link to its sibling or repo-root
    files from inside the skill. Duplicate the small references needed at runtime.
 5. Run tests, the package validator and the Skill Creator validator for each edition.

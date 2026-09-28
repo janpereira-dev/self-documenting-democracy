@@ -9,6 +9,20 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def validate_svg(path):
+    raw = path.read_text(encoding='utf-8')
+    assert '<!DOCTYPE' not in raw.upper() and '<!ENTITY' not in raw.upper(), path
+    root = ET.fromstring(raw)
+    allowed = {'svg', 'g', 'path', 'circle', 'rect', 'polygon', 'polyline',
+               'line', 'ellipse', 'title', 'desc', 'text', 'tspan'}
+    for element in root.iter():
+        assert element.tag.rsplit('}', 1)[-1] in allowed, path
+        for name, value in element.attrib.items():
+            name = name.rsplit('}', 1)[-1].lower()
+            assert not name.startswith('on') and name not in {'href', 'src', 'style'}, path
+            assert not re.search(r'url\s*\(|javascript:|data:', value, re.I), path
+
+
 def validate():
     agent = tomllib.loads((ROOT / 'adapters/codex/democracy_archivist.toml').read_text(encoding='utf-8'))
     assert agent['name'] == 'democracy_archivist'
@@ -37,7 +51,7 @@ def validate():
         if '.git' in path.parts or not path.is_file():
             continue
         if path.suffix == '.svg':
-            ET.parse(path)
+            validate_svg(path)
         if path.suffix not in {'.md', '.html'}:
             continue
         text = path.read_text(encoding='utf-8')

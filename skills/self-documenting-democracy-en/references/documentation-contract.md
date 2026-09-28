@@ -44,9 +44,9 @@ one. Static observations do not establish production behavior.
 
 ## Honest coverage
 
-The optional helper emits `entries` with `path`, `kind`, `status`, `reason` and
-metadata. Preserve these and add `read_ranges`, `evidence_ids`, `document`,
-`documented`. Manual inventories follow the same contract.
+Build `entries` with `path`, `kind`, `status`, `reason`, `read_ranges`,
+`evidence_ids`, `document` and `documented` using host reading tools.
+Use relative paths; omit sensitive names or values from exported evidence.
 File states: `pending`, `read`, `partial`, `excluded`, `blocked`.
 A pruned directory is ONE directory entry; its interior file count is unknown.
 Do not count it as a read file or hide it from the report.

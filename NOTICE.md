@@ -15,6 +15,6 @@ are labeled as unofficial fan art. See their provenance file.
 Recruitment language is fictional, satirical, and voluntary. It does not assess
 any person's worth or membership of the real Helldivers community.
 
-No open-source license has been selected for this initial private repository.
-Choose distribution terms explicitly before a public release; this notice is not
-a license grant for third-party intellectual property.
+This repository is public, but no open-source license has been selected.
+Public visibility is not an open-source license grant. Distribution terms remain
+a maintainer decision; this notice grants no rights to third-party intellectual property.
