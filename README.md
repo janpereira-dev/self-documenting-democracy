@@ -26,7 +26,9 @@ npx skills add janpereira-dev/self-documenting-democracy
 ```
 
 Choose **English**, **Spanish**, or both skills, then select your coding agent.
-No Python, manual clone, custom installer or additional API key is required.
+**Installing and using the skills does not require Python.** No manual clone,
+custom installer or additional API key is required. Python exists only in this
+repository's contributor checks, not in the installed skill folders.
 Uses the existing [Vercel Skills CLI](https://github.com/vercel-labs/skills).
 You need Node.js/npm and Git. This repository is public; no GitHub token is required.
 `npx` runs the external Skills CLI: review its prompts and source before installation.
@@ -140,6 +142,21 @@ translated narration, examples and SVG labels remain language-specific. Tests ch
 bundle completeness, passive resources and separate destinations. They do not prove a
 model will follow every instruction. See [maintenance](docs/MAINTENANCE.md).
 
+### Why are there Python files in this repository?
+
+They validate the package; they do not document your project or run when you invoke
+an installed skill:
+
+| File | Maintainer-only purpose |
+|---|---|
+| `scripts/validate_package.py` | Check package structure, local links, adapters and static assets |
+| `tests/test_editions.py` | Check bilingual bundle parity and passive resources |
+| `tests/test_security.py` | Check static SVG restrictions and CI regressions |
+
+GitHub Actions runs these checks on Windows and Linux. Neither `skills/` edition
+contains Python or other executable scripts. Keep the checks if you maintain the
+repository; skip this section if you only want to install and use a skill.
+
 For contributors only — Python 3.11+:
 
 ```sh
@@ -147,9 +164,12 @@ python -B -m unittest discover -s tests -v
 python -B scripts/validate_package.py
 ```
 
-**Status:** two skill editions and optional adapters implemented. See
-[validation](VALIDATION.md) for exactly what was tested. Real-client behavior and
-marketplace approval are separate, not implied by installing files.
+**Distribution status:** public GitHub repository with two installable skills and
+optional native adapters. A listing on skills.sh has not been confirmed. No OpenAI
+submission has been completed and no marketplace approval is claimed. See
+[validation](VALIDATION.md) for the checks performed; structural checks do not prove
+real-client behavior. Plugin packaging, publisher requirements and the final
+submission remain separate work.
 
 ### Migrating from HELLDOCS
 
