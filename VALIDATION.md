@@ -12,11 +12,13 @@
   permissions and no persisted checkout credentials. It no longer executes npm
   or passes a GitHub token to a package installer.
 
-## Real-client test attempt
+## Real-client evaluation
 
 See [the 2026-09-28 test report](docs/E2E-2026-09-28.md): four fresh GitHub
-installation scenarios passed on Windows, but real-client documentation generation
-was blocked by Codex read policy and Claude API retries. It is not an E2E pass.
+installation scenarios passed on Windows. Codex generated EN and ES documents with
+preserved source files and bounded adversarial-test passes. Coexistence preserved
+existing EN documents. Explicit opposite-language routing failed; Claude generation
+remains blocked by its configured local gateway. This is not a full acceptance pass.
 
 ## Historical installation evidence
 
