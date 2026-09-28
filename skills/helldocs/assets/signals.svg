@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="144" viewBox="0 0 256 288" role="img" aria-labelledby="title desc">
+<title id="title">Vigías del Enlace</title><desc id="desc">Insignia fan original de la división documental. No oficial.</desc>
+<path d="M20 20H236V196L128 270L20 196Z" fill="#111820" stroke="#82c7cf" stroke-width="6"/>
+<path d="M35 36H221V188L128 252L35 188Z" fill="none" stroke="#82c7cf" stroke-opacity=".4" stroke-width="2"/>
+<path d="M95 44H161M109 53H147M76 213L128 243L180 213" fill="none" stroke="#82c7cf" stroke-width="5"/>
+<g fill="#82c7cf" color="#82c7cf"><circle cx="128" cy="128" r="12"/><path d="M106 103Q82 128 106 153M150 103Q174 128 150 153M88 85Q47 128 88 171M168 85Q209 128 168 171" fill="none" stroke="currentColor" stroke-width="8"/></g>
+<path d="M51 191H205" stroke="#82c7cf" stroke-width="3"/>
+</svg>
