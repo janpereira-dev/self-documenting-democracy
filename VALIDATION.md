@@ -2,22 +2,20 @@
 
 ## Ejecutado
 
-- **16/16 pruebas unitarias satisfactorias** en Windows / Python 3.12:
-  9 de inventario y 7 de instalación, incluyendo Claude, Codex, ambos y conflictos.
-- `quick_validate.py` de Skill Creator: **Skill is valid!**
-- TOML parseado con `tomllib`; 5 SVG parseados como XML; 29 enlaces locales
-  comprobados. Dos PNG con cabeceras y dimensiones verificadas. El esquema Claude
-  tiene comprobaciones de invariantes, no un validador oficial de Anthropic.
-- Instalación en fixtures aislados: copia skill y agente, conserva archivos ajenos,
-  vista previa sin escritura y conflicto detectado antes de iniciar copias.
-- Inventario: no lee contenido, registra archivos pendientes, exclusiones sensibles,
-  directorios podados, archivos grandes, errores de permisos y nombres Unicode.
-- Comprobación sintética del bit de reparse point de Windows. No es una prueba real
-  de todos los tipos de junction ni una garantía frente a carreras del filesystem.
+- **9/9 pruebas unitarias del inventario satisfactorias** en Windows / Python 3.12.
+- Se retiraron `install.py` y sus 7 tests: ya no hay instalador propio.
+- Skills CLI **1.7.0**, procedencia npm contrastada con `vercel-labs/skills`.
+- Instalación real en un directorio aislado mediante:
+  `npx --yes skills add ../helldocs --agent codex claude-code --yes`.
+- Resultado: una skill descubierta; copia canónica en `.agents/skills/helldocs`
+  para Codex y enlace en `.claude/skills/helldocs` para Claude Code.
+- La instalación no registra los adaptadores de `adapters/`, como se declara en el README.
+- TOML, SVG, 29 enlaces locales y cabeceras de los dos PNG validados.
+- Python solo se usa para desarrollo y para el helper opcional; instalar y usar la
+  skill no requiere Python.
 
-La primera ejecución de pruebas falló por permisos de las carpetas temporales del
-host. Los fixtures se trasladaron al directorio de pruebas del workspace; se volvió
-a ejecutar la batería completa con éxito, sin modificar permisos del sistema.
+Las rutas de caché npm y temporales de la prueba se ubicaron en el workspace por
+restricciones de permisos del host. No se cambió configuración global.
 
 ## No verificado
 

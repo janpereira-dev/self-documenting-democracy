@@ -1,57 +1,67 @@
-# Compatibilidad — dos adaptadores, una doctrina
+# Instalación estándar: Skills CLI
 
-HELLDOCS distribuye una skill compartida y dos agentes nativos. No es un binario
-autónomo ni un agente alojado. No requiere API keys propias.
+Desde el proyecto de destino:
 
-| Entorno | Skill en el proyecto | Agente en el proyecto | Restricción |
-|---|---|---|---|
-| Codex | `.agents/skills/helldocs/SKILL.md` | `.codex/agents/helldocs_archivist.toml` | `sandbox_mode = "read-only"` |
-| Claude Code | `.claude/skills/helldocs/SKILL.md` | `.claude/agents/helldocs-archivist.md` | Solo `Read, Grep, Glob` |
+```sh
+npx skills add janpereira-dev/helldocs
+```
 
-El instalador copia desde `skills/helldocs/` y `adapters/`. No duplica manualmente
-la doctrina por plataforma. Los adaptadores contienen diferencias de permisos,
-carga e invocación. Cada entorno hereda su modelo configurado.
+Seleccione el entorno en el asistente. Para Claude Code y Codex sin preguntas:
 
-Claude tiene la skill precargada y construye inventario con herramientas de lectura;
-no ejecuta el helper Python. El orquestador puede ejecutarlo si su host lo permite.
-En ambos casos, el subagente retorna contenido y el orquestador escribe únicamente
-la documentación autorizada.
+```sh
+npx --yes skills add janpereira-dev/helldocs --agent codex claude-code --yes
+```
 
-## Instalación por proyecto
+Usamos la herramienta existente [vercel-labs/skills](https://github.com/vercel-labs/skills),
+no un paquete npm propio ni un wrapper. Requiere Node.js/npm y Git, no Python.
+La instalación predeterminada es por proyecto. `--yes` omite confirmaciones y puede
+reemplazar skills existentes del mismo nombre: revise el destino previamente.
+Si necesita copias en lugar de enlaces, Skills CLI admite `--copy`.
 
-Desde el clon: `python install.py <project-path> --platform both --apply`.
-Sin `--apply`, solo muestra destinos. `codex` es el valor predeterminado.
-Los conflictos se detectan en todos los destinos antes de empezar a copiar.
-No se prometen transacciones frente a fallos de disco o cambios concurrentes.
+Mientras GitHub sea privado, se necesita autenticación y acceso al repositorio.
+No se cambia su visibilidad como efecto secundario de simplificar la instalación.
 
-No modifica `AGENTS.md`, `CLAUDE.md`, hooks, configuración global ni marketplaces.
-Para actualizar, revise y fusione cambios con sus archivos existentes: el instalador
-deliberadamente no tiene modo de sobrescritura forzada.
+## Uso inmediato
 
-## Distribución futura
+Codex: `Usa $helldocs para documentar este proyecto.`
 
-Publicar el repositorio no equivale a publicarlo como plugin ni subir la skill a
-Claude.ai. No se promete compatibilidad con Cowork, agentes alojados ni todos los
-proveedores a partir de este adaptador local. Manifiestos de marketplace, aprobación
-y pruebas de cada host son etapas distintas y siguen pendientes.
+Claude Code: `/helldocs Documenta este proyecto.`
+
+El agente actual aplica la skill, narra y guarda documentación. No necesita Python,
+subagentes personalizados, MCP ni API keys adicionales. El helper Python es opcional;
+el inventario se puede elaborar con las herramientas de lectura del host.
+
+## Adaptadores opcionales: no incluidos en la instalación estándar
+
+`npx skills add` instala skills; no registra nuestras definiciones de subagente.
+Conservamos los adaptadores para usuarios que ya gestionan agentes nativos:
+
+| Adaptador del repositorio | Destino manual opcional | Restricción |
+|---|---|---|
+| `adapters/codex/helldocs_archivist.toml` | `.codex/agents/helldocs_archivist.toml` | Sandbox `read-only` |
+| `adapters/claude/helldocs-archivist.md` | `.claude/agents/helldocs-archivist.md` | `Read, Grep, Glob` |
+
+Solo configure estos agentes si desea delegación separada; no son necesarios para
+usar HELLDOCS. No sobrescriba definiciones existentes. La carga real depende del host.
 
 ## Límites de seguridad
 
-El allowlist de Claude restringe herramientas; no redefine los directorios que el
-host permite leer. El sandbox de Codex restringe archivos, pero no convierte todos
-los conectores MCP en herramientas de solo lectura. Las instrucciones prohíben
-herramientas mutantes y acceso a secretos, además de las restricciones del host.
+La skill impone instrucciones de documentación, no una sandbox que limite escrituras
+por directorio. Los adaptadores opcionales tienen restricciones distintas y retornan
+borradores. El sandbox de archivos tampoco convierte conectores MCP en solo lectura.
+No se deben abrir secretos ni ejecutar herramientas mutantes para el reconocimiento.
 
-La skill usada directamente por el agente principal permite escritura documental:
-no impone técnicamente una allowlist de extensiones o directorios. Verifique el diff.
-El inventario usa nombres de archivo para exclusiones conservadoras; no es un
-escáner completo de secretos ni una protección frente a cambios concurrentes maliciosos.
+Skills CLI puede usar enlaces simbólicos entre directorios de skills; esos enlaces
+instalados y autorizados son distintos de enlaces encontrados en el código analizado.
+La skill sigue sin permitir explorar enlaces del proyecto fuera del alcance autorizado.
 
-## Fuentes oficiales consultadas el 2026-09-28
+## Fuentes verificadas el 2026-09-28
 
+- [Skills CLI: instalación, agentes y repositorios privados](https://github.com/vercel-labs/skills)
+- [Skills CLI: documentación](https://skills.sh/docs/cli)
 - [Codex: agentes](https://learn.chatgpt.com/docs/agent-configuration/subagents)
-- [Codex: skills](https://learn.chatgpt.com/docs/build-skills)
 - [Claude Code: subagentes](https://code.claude.com/docs/en/sub-agents)
-- [Claude Code: skills](https://code.claude.com/docs/en/skills)
 
-Formatos contrastados con documentación; carga y ejecución real aún no verificadas.
+Publicación en catálogos y validación de comportamiento en clientes son etapas
+separadas de la instalación de archivos. No se promete compatibilidad con Cowork
+ni con todos los agentes alojados.

@@ -22,44 +22,44 @@ flujos y redacta expedientes en español con insignias, diagramas y fuentes.
 
 ## Alístese en menos de una órbita
 
-Requiere Git y Python 3.10+. Desde una terminal:
+Desde la carpeta del proyecto que desea documentar:
 
-```powershell
-git clone https://github.com/janpereira-dev/helldocs.git
-cd helldocs
-python install.py 'C:/ruta/a/tu-proyecto' --platform both
-python install.py 'C:/ruta/a/tu-proyecto' --platform both --apply
+```sh
+npx skills add janpereira-dev/helldocs
 ```
 
-La primera orden de instalación **solo previsualiza**; la segunda copia los archivos.
-Use `--platform codex` o `--platform claude` para un solo entorno. En macOS/Linux,
-sustituya la ruta y use `python3` si corresponde. Mientras el repositorio sea privado,
-el clon requiere acceso a GitHub.
+Seleccione Claude Code o Codex cuando lo pregunte. **Sin Python, sin clonar el repo
+manualmente y sin instalador propio.** Se utiliza [Skills CLI de Vercel](https://github.com/vercel-labs/skills).
+Necesita Node.js/npm y Git. Mientras este repositorio sea privado, necesita acceso
+GitHub configurado; el comando no evita la autenticación.
 
-No sobrescribe archivos, no cambia configuración global ni instala dependencias.
-Un fallo de E/S puede dejar una copia parcial: revísela antes de reintentar.
+¿Ambos entornos sin preguntas del CLI?
 
-### Codex: orden de despliegue
+```sh
+npx --yes skills add janpereira-dev/helldocs --agent codex claude-code --yes
+```
+
+La instalación es por proyecto, no global. Revise destinos existentes antes de usar
+`--yes`: Skills CLI puede reemplazar una skill con el mismo nombre.
+
+### Despliegue
+
+En **Codex**:
 
 ```text
-Usa $helldocs para documentar este proyecto en docs/super-earth/.
-Delega el reconocimiento a helldocs_archivist. Pásale la raíz autorizada y la ruta
-absoluta a .agents/skills/helldocs/SKILL.md. Revisa y guarda solo documentación.
-Incluye arquitectura, flujos, módulos, pruebas, operación e insignias según existan.
-No modifiques código. Registra evidencia, exclusiones y lectura pendiente.
+Usa $helldocs para documentar este proyecto.
 ```
 
-### Claude Code: orden de despliegue
+En **Claude Code**:
 
 ```text
-/helldocs Documenta este proyecto como una campaña de Supertierra.
-Delega el reconocimiento a helldocs-archivist y revisa sus borradores.
-Guarda solo documentación en docs/super-earth/, con evidencia e insignias.
-No modifiques código ni ejecutes el proyecto; declara pendientes y exclusiones.
+/helldocs Documenta este proyecto.
 ```
 
-Abra una nueva sesión en el proyecto de destino y compruebe el descubrimiento.
-Copiar archivos no demuestra que el cliente los haya cargado.
+Eso es todo: el agente actual interpreta al Portavoz y dirige la campaña.
+No necesita un subagente personalizado. Los adaptadores de `adapters/` son una opción
+avanzada separada: **`npx skills` no los instala**.
+Si la skill no aparece, abra una nueva sesión en el proyecto.
 
 ## Su escuadrón documental
 
@@ -110,8 +110,9 @@ restricción declarada». Ambos caben en el mismo expediente.
 
 ## La democracia no necesita su `.env`
 
-- Los agentes devuelven borradores sin escribir; el orquestador guarda la documentación.
-- Codex solicita sandbox `read-only`; Claude limita herramientas a `Read`, `Grep`, `Glob`.
+- En el uso estándar, el agente actual solo debe escribir documentación en el destino autorizado.
+- Los adaptadores opcionales sí restringen el reconocimiento: Codex `read-only`; Claude `Read`, `Grep`, `Glob`.
+- Instalar la skill no activa por sí solo esas restricciones técnicas.
 - Se excluyen secretos, claves, volcados, perfiles y datos privados. No se sube código
   a servicios externos para ilustrar el informe.
 - Las instrucciones encontradas en el código son datos, no nuevas órdenes.
@@ -125,8 +126,8 @@ Consulte [compatibilidad y límites](docs/COMPATIBILITY.md).
 
 ## Estado de la campaña
 
-**Implementado:** skill compartida, dos adaptadores nativos, instalador por proyecto,
-inventario de metadatos, cinco insignias y dos carteles originales.
+**Implementado:** skill compartida instalable con Skills CLI, dos adaptadores opcionales,
+inventario auxiliar opcional, cinco insignias y dos carteles originales.
 
 **Verificación:** pruebas locales y validaciones estructurales detalladas en
 [VALIDATION.md](VALIDATION.md). No demuestran comportamiento universal del modelo.
@@ -139,7 +140,8 @@ python -B -m unittest discover -s tests -v
 python -B scripts/validate_package.py
 ```
 
-El validador del paquete requiere Python 3.11+; instalación e inventario, Python 3.10+.
+Estos comandos son para desarrollar y validar el repositorio, no para instalar o
+usar HELLDOCS. El validador requiere Python 3.11+; el helper opcional, Python 3.10+.
 
 ## Archivos del Alto Mando
 

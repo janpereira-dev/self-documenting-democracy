@@ -51,11 +51,13 @@ Usa lemas originales de la referencia; no recolectes todos los diálogos del jue
 
 1. **Desembarco**: identifica raíz, límites, Git HEAD si existe y estado dirty sin
    cambiarlo. Lee las instrucciones aplicables. Define fecha y alcance del expediente.
-2. **Mapa estelar**: ejecuta, si hay Python disponible, el helper de esta skill:
+2. **Mapa estelar**: construye el inventario con las herramientas de lectura del
+   agente. No necesitas instalar Python ni ejecutar scripts para usar esta skill.
+   Opcionalmente, si Python YA está disponible, puedes usar el helper:
    `python <skill>/scripts/inventory.py <project-root>`.
    Su JSON solo inventaría METADATOS: `pending` no significa leído. Es un punto
    de partida, no un filtro de seguridad completo. Revisa sensibilidad antes de leer.
-   Sin Python, construye el mismo inventario mediante herramientas de lectura.
+   El inventario mediante herramientas de lectura tiene el mismo contrato.
 3. **Órdenes de campaña**: detecta tecnologías por manifiestos y contenido real.
    Prioriza entradas, módulos, límites, flujos críticos, persistencia, contratos,
    interfaz, configuración, pruebas y operación. Si un frente no existe, marca
@@ -77,6 +79,10 @@ Usa lemas originales de la referencia; no recolectes todos los diálogos del jue
    punto de reanudación concreto, nunca una victoria ficticia del 100 %.
 
 ## Uso del agente
+
+La instalación estándar con `npx skills add` carga esta skill en el agente actual;
+no instala ni necesita los adaptadores de subagente. Ejecuta el procedimiento
+directamente por defecto. Conserva las dos voces narrativas sin crear subagentes.
 
 Si el usuario solicita delegar y está disponible `helldocs_archivist` (Codex) o
 `helldocs-archivist` (Claude Code), entrégale
